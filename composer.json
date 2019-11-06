@@ -8,7 +8,9 @@
             "email": "christ-jan@etrias.nl"
         }
     ],
-    "require": {},
+    "require": {
+        "symfony/dependency-injection": "^3.4 || ^4.3"
+    },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16"
     },
