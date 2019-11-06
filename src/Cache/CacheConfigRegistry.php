@@ -6,7 +6,6 @@ declare(strict_types=1);
 namespace Etrias\CqrsBundle\Cache;
 
 
-use Etrias\CqrsBundle\Cache\CacheConfig;
 use Etrias\CqrsBundle\Exception\MissingConfigurationException;
 
 class CacheConfigRegistry

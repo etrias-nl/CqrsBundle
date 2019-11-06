@@ -12,6 +12,9 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16"
     },
+    "suggest": {
+        "league/tactician": "Command bus if you want to use cache middleware"
+    },
     "autoload": {
         "psr-4": {
             "Etrias\\CqrsBundle\\": "./src/"
