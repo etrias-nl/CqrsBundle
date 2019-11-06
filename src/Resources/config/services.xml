@@ -7,8 +7,6 @@
         <defaults autowire="true" autoconfigure="true" public="false" />
         <prototype namespace="Etrias\CqrsBundle\" resource="../../*" exclude="../../{Entity,Model,Migrations,Tests}"/>
 
-        <instanceof id="Etrias\CqrsBundle\Cache\TagProvider\CacheTagProviderInterface" public="true" />
-
         <service id="Etrias\CqrsBundle\Cache\CacheMiddleware">
             <argument type="service" id="etrias.cqrs.command.cache"/>
             <argument type="service" id="Etrias\CqrsBundle\Cache\CacheConfigRegistry" />

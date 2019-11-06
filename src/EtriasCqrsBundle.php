@@ -13,10 +13,4 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EtriasCqrsBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
-        $container->addCompilerPass(new HandlerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION);
-        $container->addCompilerPass(new CacheTagProviderPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION);
-    }
 }

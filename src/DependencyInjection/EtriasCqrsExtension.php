@@ -9,6 +9,7 @@ use Etrias\CqrsBundle\Cache\CacheConfig;
 use Etrias\CqrsBundle\Cache\CacheConfigRegistry;
 use Etrias\CqrsBundle\Cache\CacheMiddleware;
 use Etrias\CqrsBundle\Cache\NameStrategy\ExpressionStrategy;
+use Etrias\CqrsBundle\Handlers\HandlerInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -31,6 +32,7 @@ class EtriasCqrsExtension extends ConfigurableExtension
 
         $loader->load('services.xml');
 
+        $container->registerForAutoconfiguration(HandlerInterface::class)->addTag('tactician.handler');
 
         $commandCache = $container->getDefinition('etrias.cqrs.command.cache');
         $commandCache->setArgument(0, new Reference($mergedConfig['cache']['items_adapter']));
