@@ -32,7 +32,7 @@ class EtriasCqrsExtension extends ConfigurableExtension
 
         $loader->load('services.xml');
 
-        $container->registerForAutoconfiguration(HandlerInterface::class)->addTag('tactician.handler');
+        $container->registerForAutoconfiguration(HandlerInterface::class)->addTag('tactician.handler', ['typehints' => true]);
 
         $commandCache = $container->getDefinition('etrias.cqrs.command.cache');
         $commandCache->setArgument(0, new Reference($mergedConfig['cache']['items_adapter']));
