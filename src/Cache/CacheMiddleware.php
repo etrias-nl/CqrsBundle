@@ -15,9 +15,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Serializer\Exception\UnsupportedException;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerAwareTrait;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class CacheMiddleware implements Middleware
+class CacheMiddleware implements Middleware, SerializerAwareInterface
 {
+    use SerializerAwareTrait;
+
     /** string */
     const SEPARATOR = "::";
 
@@ -39,10 +44,6 @@ class CacheMiddleware implements Middleware
      * @var ContainerInterface
      */
     protected $container;
-    /**
-     * @var Serializer
-     */
-    protected $serializer;
 
     /** @var  string */
     protected $encoding;
@@ -55,7 +56,6 @@ class CacheMiddleware implements Middleware
      * CacheMiddleware constructor.
      * @param TagAwareAdapterInterface $cache
      * @param CacheConfigRegistry $cacheConfigRegistry
-     * @param Serializer $serializer
      * @param string $encoding
      * @param ExpressionLanguage $expressionLanguage
      * @param LoggerInterface $logger
@@ -64,7 +64,6 @@ class CacheMiddleware implements Middleware
     public function __construct(
         TagAwareAdapterInterface $cache,
         CacheConfigRegistry $cacheConfigRegistry,
-        Serializer $serializer,
         string $encoding,
         ExpressionLanguage $expressionLanguage,
         LoggerInterface $logger,
@@ -75,14 +74,17 @@ class CacheMiddleware implements Middleware
         $this->cacheConfigRegistry = $cacheConfigRegistry;
         $this->expressionLanguage = $expressionLanguage;
         $this->container = $container;
-        $this->serializer = $serializer;
         $this->logger = $logger;
+        $this->encoding = $encoding;
+    }
 
-        if (!$serializer->supportsEncoding($encoding)) {
+    public function setSerializer(SerializerInterface $serializer)
+    {
+        if (!$serializer->supportsEncoding($this->encoding)) {
             throw new UnsupportedException('Not supported encoding: '. $encoding);
         }
 
-        $this->encoding = $encoding;
+        $this->serializer = $serializer;
     }
 
     /**
