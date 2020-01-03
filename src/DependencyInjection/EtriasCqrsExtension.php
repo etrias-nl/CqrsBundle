@@ -80,6 +80,6 @@ class EtriasCqrsExtension extends ConfigurableExtension
     protected function configEncoder(ContainerBuilder $container, array $config)
     {
         $cacheMiddleware = $container->getDefinition(CacheMiddleware::class);
-        $cacheMiddleware->setArgument(3, $config['cache']['encoder']);
+        $cacheMiddleware->setArgument('$encoding', $config['cache']['encoder']);
     }
 }
