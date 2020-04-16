@@ -17,6 +17,10 @@
             </call>
         </service>
 
+        <service id="Etrias\CqrsBundle\Console\Command\InvalidateTagsCommand">
+            <argument key="$cache" type="service" id="etrias.cqrs.command.cache" />
+        </service>
+
         <service id="etrias.cqrs.command.cache" class="Symfony\Component\Cache\Adapter\TagAwareAdapter" />
     </services>
 </container>
