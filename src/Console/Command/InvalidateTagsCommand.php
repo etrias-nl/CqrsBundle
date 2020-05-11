@@ -14,6 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class InvalidateTagsCommand extends Command
 {
+    protected static $defaultName = 'cqrs:invalidate:tags';
+
     /**
      * @var TagAwareAdapterInterface
      */
@@ -30,7 +32,6 @@ class InvalidateTagsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('cqrs:invalidate:tags')
             ->addArgument(
                 'tags',
                 InputArgument::IS_ARRAY | InputArgument::REQUIRED,
