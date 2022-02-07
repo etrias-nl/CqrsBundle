@@ -7,12 +7,11 @@ namespace Etrias\CqrsBundle\Cache;
 
 
 use Etrias\CqrsBundle\Command\QueryInterface;
-use Exception;
+use Etrias\CqrsBundle\ExpressionLanguage\ExpressionLanguage;
 use League\Tactician\Middleware;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Serializer\Exception\UnsupportedException;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerAwareInterface;
@@ -57,7 +56,6 @@ class CacheMiddleware implements Middleware, SerializerAwareInterface
      * @param TagAwareAdapterInterface $cache
      * @param CacheConfigRegistry $cacheConfigRegistry
      * @param string $encoding
-     * @param ExpressionLanguage $expressionLanguage
      * @param LoggerInterface $logger
      * @param ContainerInterface $container
      */
@@ -65,14 +63,13 @@ class CacheMiddleware implements Middleware, SerializerAwareInterface
         TagAwareAdapterInterface $cache,
         CacheConfigRegistry $cacheConfigRegistry,
         string $encoding,
-        ExpressionLanguage $expressionLanguage,
         LoggerInterface $logger,
         ContainerInterface $container
     )
     {
         $this->cache = $cache;
         $this->cacheConfigRegistry = $cacheConfigRegistry;
-        $this->expressionLanguage = $expressionLanguage;
+        $this->expressionLanguage = new ExpressionLanguage();
         $this->container = $container;
         $this->logger = $logger;
         $this->encoding = $encoding;
@@ -107,7 +104,7 @@ class CacheMiddleware implements Middleware, SerializerAwareInterface
         if ($item->isHit()) {
             try {
                 return $this->serializer->decode($item->get(), $this->encoding);
-            } catch (Exception $exception){
+            } catch (\Exception $exception){
                 $this->logger->critical('Cannot unserialize cache: '. $cacheName);
             }
         }
