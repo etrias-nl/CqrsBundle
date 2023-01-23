@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Etrias\CqrsBundle\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -16,38 +15,24 @@ class InvalidateTagsCommand extends Command
 {
     protected static $defaultName = 'cqrs:invalidate:tags';
 
-    /**
-     * @var TagAwareAdapterInterface
-     */
-    protected $cache;
+    protected TagAwareAdapterInterface $cache;
 
-    public function __construct($name = null,  TagAwareAdapterInterface $cache)
+    public function __construct(TagAwareAdapterInterface $cache)
     {
-        parent::__construct($name);
+        parent::__construct();
 
         $this->cache = $cache;
     }
 
-
     protected function configure()
     {
         $this
-            ->addArgument(
-                'tags',
-                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'tags to invalidate'
-            )
+            ->addArgument('tags', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'tags to invalidate')
             ->setDescription('Invalidate tags (separate multiple names with a space)')
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -56,5 +41,7 @@ class InvalidateTagsCommand extends Command
         $this->cache->invalidateTags($tags);
 
         $io->success('tags invalidated');
+
+        return 0;
     }
 }

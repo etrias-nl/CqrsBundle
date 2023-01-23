@@ -51,22 +51,13 @@ class CacheMiddleware implements Middleware, SerializerAwareInterface
      */
     private $logger;
 
-    /**
-     * CacheMiddleware constructor.
-     * @param TagAwareAdapterInterface $cache
-     * @param CacheConfigRegistry $cacheConfigRegistry
-     * @param string $encoding
-     * @param LoggerInterface $logger
-     * @param ContainerInterface $container
-     */
     public function __construct(
         TagAwareAdapterInterface $cache,
         CacheConfigRegistry $cacheConfigRegistry,
         string $encoding,
         LoggerInterface $logger,
         ContainerInterface $container
-    )
-    {
+    ) {
         $this->cache = $cache;
         $this->cacheConfigRegistry = $cacheConfigRegistry;
         $this->expressionLanguage = new ExpressionLanguage();

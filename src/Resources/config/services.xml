@@ -11,6 +11,7 @@
             <argument type="service" id="etrias.cqrs.command.cache"/>
             <argument type="service" id="Etrias\CqrsBundle\Cache\CacheConfigRegistry" />
             <argument type="string" /> <!-- encoder -->
+            <argument key="$container" type="service" id="service_container"/>
             <call method="setSerializer">
                 <argument type="service" id="serializer"/>
             </call>
