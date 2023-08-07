@@ -10,13 +10,11 @@ use Etrias\CqrsBundle\Cache\TagProvider\CacheTagProviderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * @deprecated use DI tags + autoconfigure
 class CacheTagProviderPass implements CompilerPassInterface
 {
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         foreach ($container->getDefinitions() as $definition) {
             if(is_a($definition->getClass(), CacheTagProviderInterface::class, true)) {
