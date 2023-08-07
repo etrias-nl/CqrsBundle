@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @deprecated use DI tags + autoconfigure
+ */
 class CacheTagProviderPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
