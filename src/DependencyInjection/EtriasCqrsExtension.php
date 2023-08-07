@@ -20,9 +20,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class EtriasCqrsExtension extends ConfigurableExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader(
@@ -51,7 +48,7 @@ class EtriasCqrsExtension extends ConfigurableExtension
         }
     }
 
-    protected function addCacheConfig(string $commandClassName, array $config, ContainerBuilder $container, Definition $registryDefinition)
+    protected function addCacheConfig(string $commandClassName, array $config, ContainerBuilder $container, Definition $registryDefinition): void
     {
         if ($config['name_xpr'] !== null) {
             $nameStrategy = new Definition(ExpressionStrategy::class, [$config['name_xpr']]);
@@ -73,11 +70,10 @@ class EtriasCqrsExtension extends ConfigurableExtension
 
         $configDefinition->addMethodCall('setTagExpressions', [$config['tags']]);
 
-
         $registryDefinition->addMethodCall('addConfig', [$commandClassName, $configDefinition]);
     }
 
-    protected function configEncoder(ContainerBuilder $container, array $config)
+    protected function configEncoder(ContainerBuilder $container, array $config): void
     {
         $cacheMiddleware = $container->getDefinition(CacheMiddleware::class);
         $cacheMiddleware->setArgument('$encoding', $config['cache']['encoder']);
