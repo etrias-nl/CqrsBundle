@@ -66,6 +66,9 @@ class CacheMiddleware implements Middleware, SerializerAwareInterface
         $this->encoding = $encoding;
     }
 
+    /**
+     * @return void
+     */
     public function setSerializer(SerializerInterface $serializer)
     {
         if (!$serializer->supportsEncoding($this->encoding)) {
